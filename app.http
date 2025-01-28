@@ -1,3 +1,24 @@
 GET http://localhost:8000/ok
 ###
 GET http://localhost:8000/timeout
+###
+POST http://localhost:8000/register
+Content-Type: application/json
+
+{
+     "full_name":"Everlyn Muthoni",
+     "email":"junevamdee@gmail.com",
+    "password":"password",
+    "contact_phone":"09876540987",
+    "address":"Nyeri",
+    "role":"userAdminRoleAuth"
+}
+
+###
+POST http://localhost:8000/login
+Content-Type: application/json
+
+{
+    "email": "junevamdee@gmail.com",
+    "password":"password"
+}
