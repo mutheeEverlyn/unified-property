@@ -10,8 +10,7 @@ import { HTTPException } from 'hono/http-exception';
 import { prometheus } from '@hono/prometheus';
 import { rateLimiter } from 'hono-rate-limiter';
 import dotenv from 'dotenv';
-import { bookingsRouter } from './bookings/bookings.router';
-import { historyRouter } from './history/history.router';
+import { PurchaseRouter } from './purchase/purchase.router';
 import { houseRouter } from './houses/house.router';
 import { landRouter } from './land/land.router';
 import { locationRouter } from './locations/locations.router';
@@ -151,8 +150,7 @@ app.get('/', (c) => {
   // Custom routes
 app.route("/", userRouter); 
 app.route("/", authRouter);
-app.route("/",bookingsRouter);
-app.route("/",historyRouter);
+app.route("/",PurchaseRouter);
 app.route("/",houseRouter);
 app.route("/",landRouter);
 app.route("/",locationRouter);
