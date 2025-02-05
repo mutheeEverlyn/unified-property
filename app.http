@@ -18,12 +18,12 @@ POST http://localhost:8000/register
 Content-Type: application/json
 
 {
-     "full_name":"kibira",
-     "email":"kibira@gmail.com",
+     "full_name":"kamaa",
+     "email":"kamaa@gmail.com",
     "password":"password",
     "contact_phone":"09876540987",
     "address":"Nyeri",
-    "role":"user"
+    "role":"admin"
 }
 
 ###
@@ -31,6 +31,6 @@ POST http://localhost:8000/login
 Content-Type: application/json
 
 {
-    "email": "eve@gmail.com",
+    "email": "grace@gmail.com",
     "password":"password"
 }
