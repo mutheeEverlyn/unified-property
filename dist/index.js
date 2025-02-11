@@ -15,6 +15,15 @@ const http_exception_1 = require("hono/http-exception");
 const prometheus_1 = require("@hono/prometheus");
 const hono_rate_limiter_1 = require("hono-rate-limiter");
 const dotenv_1 = __importDefault(require("dotenv"));
+const purchase_router_1 = require("./purchase/purchase.router");
+const house_router_1 = require("./houses/house.router");
+const land_router_1 = require("./land/land.router");
+const locations_router_1 = require("./locations/locations.router");
+const reviews_router_1 = require("./reviews/reviews.router");
+const transaction_router_1 = require("./transaction/transaction.router");
+const user_router_1 = require("./users/user.router");
+const vehicle_router_1 = require("./vehicles/vehicle.router");
+const auth_router_1 = require("./auth/auth.router");
 dotenv_1.default.config();
 const app = new hono_1.Hono();
 app.use((0, cors_1.cors)({
@@ -130,6 +139,16 @@ app.get('/timeout', async (c) => {
 });
 app.get('/metrics', printMetrics);
 app.use(limiter);
+// Custom routes
+app.route("/", user_router_1.userRouter);
+app.route("/", auth_router_1.authRouter);
+app.route("/", purchase_router_1.PurchaseRouter);
+app.route("/", house_router_1.houseRouter);
+app.route("/", land_router_1.landRouter);
+app.route("/", locations_router_1.locationRouter);
+app.route("/", reviews_router_1.reviewsRouter);
+app.route("/", transaction_router_1.transactionsRouter);
+app.route("/", vehicle_router_1.vehicleRouter);
 (0, node_server_1.serve)({
     fetch: app.fetch,
     port: Number(process.env.PORT) || 3000,
