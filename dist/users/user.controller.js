@@ -17,15 +17,6 @@ const listUsers = async (c) => {
     }
 };
 exports.listUsers = listUsers;
-//users data
-// export const getUsersData= async (c: Context) => {
-//     try {
-//         const data = await usersData();
-//         return c.json(data, 200);
-//     } catch (error: any) {
-//         return c.json({ error: error?.message }, 400)
-//     }
-// }
 const getUser = async (c) => {
     const id = parseInt(c.req.param("id"));
     if (isNaN(id))
