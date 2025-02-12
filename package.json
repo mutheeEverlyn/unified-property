@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsx watch src/index.ts",
-    "start": "npm run build && node .dist/index.js",
+    "start": "pnpm run build && node .dist/index.js",
     "gen": "drizzle-kit generate",
     "migrate": "tsx src/drizzle/migrate.ts",
     "studio": "drizzle-kit studio",
