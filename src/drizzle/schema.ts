@@ -98,10 +98,11 @@ export const AuthOnUsersTable = pgTable("auth_on_users", {
 
  // Transactions Table (covers all property types)
  export const transactionsTable = pgTable("transactions", {
-  transaction_id: serial("transaction_id").primaryKey(),
+  transaction_id: serial("transaction_id").primaryKey().notNull(),
   purchase_id: integer("purchase_id").references(() => purchaseTable.purchase_id, { onDelete: "cascade" }),
   user_id: integer("user_id").references(() => usersTable.user_id, { onDelete: "cascade" }),
-  amount: integer("amount"),
+  amount: integer("amount").notNull(),
+  phone_number:varchar("phone_number",{length:50}).notNull(),
   transaction_date: timestamp("transaction_date").notNull().defaultNow(),
   status: varchar("status", { length: 50 }).notNull(),
 });
