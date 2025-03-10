@@ -14,6 +14,18 @@ Content-Type: application/json
     "zip_code": "00100"
 }
 ###
+POST http://localhost:8000/reviews
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdW5lQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTczODE4MTI5OX0.KN1qeyrbN5MI6j45BIrsWPTJOSw0RgvmYjJz3Mozg9M
+Content-Type: application/json
+
+{
+    "city": "Nairobi",
+    "state": "Nairobi",
+    "country": "Kenya",
+    "address": "Nairobi CBD",
+    "zip_code": "00100"
+}
+###
 POST http://localhost:8000/register
 Content-Type: application/json
 

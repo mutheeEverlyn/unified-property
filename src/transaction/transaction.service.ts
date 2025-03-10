@@ -1,69 +1,84 @@
-import { Column, eq, gt, sql } from "drizzle-orm";
+import axios from "axios";
+import { Column, eq } from "drizzle-orm";
 import db from "../drizzle/db";
-import {transactionsTable, tsTransactions,tiTransactions} from "../drizzle/schema"
+import { transactionsTable, tsTransactions, tiTransactions } from "../drizzle/schema";
 
+// Load environment variables
+import dotenv from "dotenv";
+dotenv.config();
 
-export const transactionsService = async (limit?: number):Promise<tsTransactions [] | null> => {
-    if (limit) {
-        return await db.query.transactionsTable.findMany({
-            limit: limit
-        });
-    }
-    return await db.query.transactionsTable.findMany();
-}
+const MPESA_BASE_URL = "https://sandbox.safaricom.co.ke";
+const CONSUMER_KEY = process.env.MPESA_CONSUMER_KEY!;
+const CONSUMER_SECRET = process.env.MPESA_CONSUMER_SECRET!;
+const SHORTCODE = process.env.MPESA_SHORTCODE!;
+const PASSKEY = process.env.MPESA_PASSKEY!;
+const CALLBACK_URL = process.env.MPESA_CALLBACK_URL!;
 
-export const getTransactionsService = async (id: number) => {
-    return await db.query.transactionsTable.findFirst({
-        where: eq(transactionsTable.transaction_id, id)
-    })
-}
-
-
-
-export const transactionsData = async () => {
-    return await db.query.transactionsTable.findMany({
-        columns:{
-           transaction_id:true,
-           purchase_id:true,
-           user_id:true,
-           amount:true,
-           status:true,
-           transaction_date:true
-        },with:{
-           purchaseTable:{
-                columns:{
-                     purchase_id:true,
-                     purchase_date:true,
-                     location_id:true,
-                     purchase_status:true,
-                     user_id:true,
-                     total_amount:true
-                }
+// Function to generate MPesa access token
+const getMpesaAccessToken = async (): Promise<string | null> => {
+    try {
+        const auth = Buffer.from(`${CONSUMER_KEY}:${CONSUMER_SECRET}`).toString("base64");
+        const response = await axios.get(`${MPESA_BASE_URL}/oauth/v1/generate?grant_type=client_credentials`, {
+            headers: {
+                Authorization: `Basic ${auth}`,
             },
-            user:{
-                columns:{
-                    address:true,
-                    contact_phone:true,
-                    email:true,
-                    full_name:true,
-                    user_id:true
-                }
-            }
+        });
+        return response.data.access_token;
+    } catch (error) {
+        console.error("MPesa Token Error:", error);
+        return null;
+    }
+};
 
-        }
-    })
-}
-export const createTransactionsService = async (transactions:tiTransactions):Promise<string | null>  => {
-    await db.insert(transactionsTable).values(transactions)
-    return "transactions created successfully";
-}
+// Function to initiate MPesa STK Push
+export const initiateMpesaPayment = async (phone: string, amount: number, transactionId: number) => {
+    const token = await getMpesaAccessToken();
+    if (!token) throw new Error("Failed to get MPesa access token");
 
-export const updateTransactionsService = async (id: number, transactions: tiTransactions):Promise<string | null> => {
-    await db.update(transactionsTable).set(transactions).where(eq(transactionsTable.transaction_id, id))
-    return "transactions updated successfully";
-}
+    const timestamp = new Date().toISOString().replace(/[-:T.]/g, "").substring(0, 14);
+    const password = Buffer.from(`${SHORTCODE}${PASSKEY}${timestamp}`).toString("base64");
 
-export const deleteTransactionsService = async (id: number):Promise<string | null>  => {
-    await db.delete(transactionsTable).where(eq(transactionsTable.transaction_id, id))
-    return "transactions deleted successfully";
-}
+    const payload = {
+        BusinessShortCode: SHORTCODE,
+        Password: password,
+        Timestamp: timestamp,
+        TransactionType: "CustomerPayBillOnline",
+        Amount: amount,
+        PartyA: phone, // Customer's phone number
+        PartyB: SHORTCODE,
+        PhoneNumber: phone,
+        CallBackURL: CALLBACK_URL,
+        AccountReference: `TXN-${transactionId}`,
+        TransactionDesc: "Property Payment",
+    };
+
+    try {
+        const response = await axios.post(`${MPESA_BASE_URL}/mpesa/stkpush/v1/processrequest`, payload, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error("MPesa STK Push Error:", error);
+        throw new Error("MPesa STK Push Failed");
+    }
+};
+
+export const createTransactionsService = async (transactions: tiTransactions): Promise<string> => {
+    const insertedTransaction = await db.insert(transactionsTable)
+        .values(transactions)
+        .returning({ transaction_id: transactionsTable.transaction_id }); // Get the inserted ID
+
+    const transactionId = insertedTransaction[0]?.transaction_id;
+    if (!transactionId) {
+        throw new Error("Failed to retrieve transaction ID after insertion");
+    }
+
+    // Initiate MPesa Payment
+    await initiateMpesaPayment(transactions.phone_number, transactions.amount, transactionId);
+
+    return "Transaction created and MPesa payment initiated";
+};

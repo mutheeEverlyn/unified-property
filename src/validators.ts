@@ -73,6 +73,7 @@ export const transactionSchema = z.object({
     user_id: z.number(),
     amount:z.number(),
     status: z.string(),
+    phone_number:z.string(),
     transaction_date:z.string().optional()
 })
 export const reviewsSchema = z.object({
