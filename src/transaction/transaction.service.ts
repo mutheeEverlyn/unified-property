@@ -38,15 +38,18 @@ export const initiateMpesaPayment = async (phone: string, amount: number, transa
     const timestamp = new Date().toISOString().replace(/[-:T.]/g, "").substring(0, 14);
     const password = Buffer.from(`${SHORTCODE}${PASSKEY}${timestamp}`).toString("base64");
 
+    // Format the phone number to international format
+    const formattedPhone = phone.startsWith("0") ? `254${phone.substring(1)}` : phone;
+
     const payload = {
         BusinessShortCode: SHORTCODE,
         Password: password,
         Timestamp: timestamp,
         TransactionType: "CustomerPayBillOnline",
         Amount: amount,
-        PartyA: phone, // Customer's phone number
+        PartyA: formattedPhone, // Customer's phone number in international format
         PartyB: SHORTCODE,
-        PhoneNumber: phone,
+        PhoneNumber: formattedPhone,
         CallBackURL: CALLBACK_URL,
         AccountReference: `TXN-${transactionId}`,
         TransactionDesc: "Property Payment",
@@ -62,7 +65,11 @@ export const initiateMpesaPayment = async (phone: string, amount: number, transa
 
         return response.data;
     } catch (error) {
-        console.error("MPesa STK Push Error:", error);
+        if (axios.isAxiosError(error)) {
+            console.error("MPesa STK Push Error:", error.response ? error.response.data : error.message);
+        } else {
+            console.error("MPesa STK Push Error:", error);
+        }
         throw new Error("MPesa STK Push Failed");
     }
 };
@@ -81,4 +88,31 @@ export const createTransactionsService = async (transactions: tiTransactions): P
     await initiateMpesaPayment(transactions.phone_number, transactions.amount, transactionId);
 
     return "Transaction created and MPesa payment initiated";
+};
+
+// Define the missing functions
+export const transactionsService = async (limit: number) => {
+    // Implement the logic to fetch transactions with a limit
+    return await db.select().from(transactionsTable).limit(limit);
+};
+
+export const getTransactionsService = async (id: number) => {
+    // Implement the logic to fetch a transaction by ID
+    const result = await db.select().from(transactionsTable).where(eq(transactionsTable.transaction_id, id)).limit(1);
+    return result[0]; // Return the first (and only) result
+};
+
+export const updateTransactionsService = async (id: number, transactions: tiTransactions) => {
+    // Implement the logic to update a transaction by ID
+    return await db.update(transactionsTable).set(transactions).where(eq(transactionsTable.transaction_id, id));
+};
+
+export const deleteTransactionsService = async (id: number) => {
+    // Implement the logic to delete a transaction by ID
+    return await db.delete(transactionsTable).where(eq(transactionsTable.transaction_id, id));
+};
+
+export const transactionsData = async () => {
+    // Implement the logic to fetch all transactions
+    return await db.select().from(transactionsTable);
 };

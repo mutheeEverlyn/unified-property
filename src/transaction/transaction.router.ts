@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import {listTransactions,getTransactions,createTransactions,updateTransactions,deleteTransactions,transactions,}from "./transaction.controller";
+import {listTransactions,getTransactions,createTransactions,updateTransactions,deleteTransactions,transactions,mpesaCallback }from "./transaction.controller";
 import { zValidator } from "@hono/zod-validator";
 import { transactionSchema } from "../validators";
 import { adminRoleAuth, userRoleAuth, userAdminRoleAuth } from "../middleware/bearAuth";
@@ -23,3 +23,4 @@ transactionsRouter.post(
 
 transactionsRouter.put("/transactions/:id", userAdminRoleAuth, updateTransactions);
 transactionsRouter.delete("/transactions/:id", adminRoleAuth, deleteTransactions);
+transactionsRouter.post("/mpesa/callback", mpesaCallback);

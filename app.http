@@ -2,6 +2,21 @@ GET http://localhost:8000/ok
 ###
 GET http://localhost:8000/timeout
 ###
+GET http://localhost:8000/transactions
+###
+POST http://localhost:8000/transactions
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncmFjZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImV4cCI6MTc0MTk1NDQ4NX0.XVIuSRdUcINWjAH8Vl9SziT2wy_TooFQ1-7wJkPtALk
+Content-Type: application/json
+
+{
+    "purchase_id":1,
+    "user_id": 21,
+    "amount": 5000,
+    "status": "pending",
+    "phone_number": "0797916373"
+}
+
+###
 POST http://localhost:8000/location
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdW5lQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTczODE4MTI5OX0.KN1qeyrbN5MI6j45BIrsWPTJOSw0RgvmYjJz3Mozg9M
 Content-Type: application/json
@@ -30,12 +45,12 @@ POST http://localhost:8000/register
 Content-Type: application/json
 
 {
-     "full_name":"kamaa",
-     "email":"kamaa@gmail.com",
+     "full_name":"grace",
+     "email":"grace@gmail.com",
     "password":"password",
     "contact_phone":"09876540987",
     "address":"Nyeri",
-    "role":"admin"
+    "role":"user"
 }
 
 ###
