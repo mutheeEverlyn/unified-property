@@ -5,15 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1738324260119,
-      "tag": "0000_nifty_overlord",
+      "when": 1742193963135,
+      "tag": "0000_clumsy_mandrill",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1740983622167,
-      "tag": "0001_natural_diamondback",
+      "when": 1742194428983,
+      "tag": "0001_wandering_mauler",
       "breakpoints": true
     }
   ]

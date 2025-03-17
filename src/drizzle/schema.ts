@@ -93,7 +93,9 @@ export const AuthOnUsersTable = pgTable("auth_on_users", {
   purchase_date: timestamp("purchase_date").notNull().defaultNow(),
   purchase_status: text("purchase_status").default("pending"),
   location_id: integer("location_id").notNull().references(() => locationTable.location_id, { onDelete: "cascade" }),
-  total_amount: integer("total_amount").notNull()
+  total_amount: integer("total_amount").notNull(),
+  property_type: varchar("property_type", { length: 50 }).notNull(),
+  property_id: integer("property_id").notNull()
 });
 
  // Transactions Table (covers all property types)

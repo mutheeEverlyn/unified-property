@@ -4,6 +4,20 @@ GET http://localhost:8000/timeout
 ###
 GET http://localhost:8000/transactions
 ###
+GET http://localhost:8000/reviews
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJldmFoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTc0MTk2NzIxOH0.1lmyVCQBPAOGHXvJLtNQIP-aBAPb-14PvwJt7JnPXlk  
+###
+POST http://localhost:8000/reviews
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncmFjZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImV4cCI6MTc0MTk1NDQ4NX0.XVIuSRdUcINWjAH8Vl9SziT2wy_TooFQ1-7wJkPtALk
+Content-Type: application/json
+
+{
+    "user_id": 21,
+    "rating": 5,
+    "comment": "Kenya"
+}
+
+###
 POST http://localhost:8000/transactions
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncmFjZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImV4cCI6MTc0MTk1NDQ4NX0.XVIuSRdUcINWjAH8Vl9SziT2wy_TooFQ1-7wJkPtALk
 Content-Type: application/json
@@ -13,7 +27,7 @@ Content-Type: application/json
     "user_id": 21,
     "amount": 5000,
     "status": "pending",
-    "phone_number": "0797916373"
+    "phone_number": "0796705177"
 }
 
 ###
@@ -58,6 +72,7 @@ POST http://localhost:8000/login
 Content-Type: application/json
 
 {
-    "email": "grace@gmail.com",
+    "email": "evah@gmail.com",
     "password":"password"
 }
+###

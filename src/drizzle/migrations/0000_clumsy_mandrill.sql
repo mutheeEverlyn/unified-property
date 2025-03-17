@@ -71,7 +71,8 @@ CREATE TABLE IF NOT EXISTS "transactions" (
 	"transaction_id" serial PRIMARY KEY NOT NULL,
 	"purchase_id" integer,
 	"user_id" integer,
-	"amount" integer,
+	"amount" integer NOT NULL,
+	"phone_number" varchar(50) NOT NULL,
 	"transaction_date" timestamp DEFAULT now() NOT NULL,
 	"status" varchar(50) NOT NULL
 );

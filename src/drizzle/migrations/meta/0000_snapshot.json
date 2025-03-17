@@ -1,5 +1,5 @@
 {
-  "id": "68ef1274-160e-4853-a292-dbb610e656e3",
+  "id": "3592d961-9c50-4b46-8cd5-1cb488ba8b57",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -454,7 +454,13 @@
           "name": "amount",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "phone_number": {
+          "name": "phone_number",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
         },
         "transaction_date": {
           "name": "transaction_date",

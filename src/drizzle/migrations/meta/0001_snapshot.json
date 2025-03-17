@@ -1,6 +1,6 @@
 {
-  "id": "91115fa5-0a58-42f6-a51d-1f42c017ee73",
-  "prevId": "68ef1274-160e-4853-a292-dbb610e656e3",
+  "id": "e97166ee-9333-4fcb-94fa-61eecfce5148",
+  "prevId": "3592d961-9c50-4b46-8cd5-1cb488ba8b57",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -336,6 +336,18 @@
         },
         "total_amount": {
           "name": "total_amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "property_type": {
+          "name": "property_type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "property_id": {
+          "name": "property_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
