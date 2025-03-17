@@ -2,7 +2,8 @@ GET http://localhost:8000/ok
 ###
 GET http://localhost:8000/timeout
 ###
-GET http://localhost:8000/transactions
+GET http://localhost:8000/purchase
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJldmFoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTc0MjMwNjUwNn0.zCakhicYUO1m2nd8e_FWaT-jeZjH5PnzbM-_lTG7xZk
 ###
 GET http://localhost:8000/reviews
 Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJldmFoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTc0MTk2NzIxOH0.1lmyVCQBPAOGHXvJLtNQIP-aBAPb-14PvwJt7JnPXlk  
@@ -43,16 +44,17 @@ Content-Type: application/json
     "zip_code": "00100"
 }
 ###
-POST http://localhost:8000/reviews
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdW5lQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTczODE4MTI5OX0.KN1qeyrbN5MI6j45BIrsWPTJOSw0RgvmYjJz3Mozg9M
+POST http://localhost:8000/purchase
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraWJpcmFAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDIzMDU5NDR9.RQU3SJqEk1cemLpEZHEEymmOKUrs9JP0wHpTCtfrea8
 Content-Type: application/json
 
 {
-    "city": "Nairobi",
-    "state": "Nairobi",
-    "country": "Kenya",
-    "address": "Nairobi CBD",
-    "zip_code": "00100"
+     "user_id": 14,
+    "property_type": "house",
+    "property_id": 1,
+    "total_amount": 100000,
+    "location_id": 1,
+    "purchase_status": "pending"
 }
 ###
 POST http://localhost:8000/register

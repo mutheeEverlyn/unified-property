@@ -6,19 +6,19 @@ import { adminRoleAuth,userRoleAuth,userAdminRoleAuth} from "../middleware/bearA
 export const PurchaseRouter = new Hono();
 
 
-PurchaseRouter.get("/Purchase",userAdminRoleAuth, listPurchase);
+PurchaseRouter.get("/purchase",userAdminRoleAuth, listPurchase);
 
-PurchaseRouter.get("/PurchaseData",userAdminRoleAuth, Purchase);
+PurchaseRouter.get("pPurchaseData",userAdminRoleAuth, Purchase);
 
-PurchaseRouter.get("/Purchase/:id",userAdminRoleAuth, getPurchase)
+PurchaseRouter.get("/purchase/:id",userAdminRoleAuth, getPurchase)
 
-PurchaseRouter.post("/Purchase",zValidator('json',purchaseSchema,(result,c) =>{
+PurchaseRouter.post("/purchase",zValidator('json',purchaseSchema,(result,c) =>{
     if(!result.success){
         return c.json(result.error,400)
     }
 }), userRoleAuth,createPurchase)
 
-PurchaseRouter.put("/Purchase/:id",userAdminRoleAuth, updatePurchase)
+PurchaseRouter.put("/purchase/:id",userAdminRoleAuth, updatePurchase)
 
-PurchaseRouter.delete("/Purchase/:id",adminRoleAuth, deletePurchase)
+PurchaseRouter.delete("/purchase/:id",adminRoleAuth, deletePurchase)
 
