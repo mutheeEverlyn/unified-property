@@ -52,7 +52,8 @@ export const userLoginService = async (user: UserDetails) => {
       user_id:true,
       email:true,
       full_name:true,
-      role:true
+      role:true,
+      contact_phone:true,
     },
     where: sql`${usersTable.email} = ${email}`,
     with: {

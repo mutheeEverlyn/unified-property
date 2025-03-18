@@ -68,6 +68,7 @@ export const loginUser = async (c: Context) => {
           role: userExist?.role,
           full_name: userExist?.full_name,
           email: userExist?.email,
+          contact_phone: userExist?.contact_phone,
         }
       };
 
