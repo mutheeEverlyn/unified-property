@@ -20,5 +20,5 @@ PurchaseRouter.post("/purchase",zValidator('json',purchaseSchema,(result,c) =>{
 
 PurchaseRouter.put("/purchase/:id",userAdminRoleAuth, updatePurchase)
 
-PurchaseRouter.delete("/purchase/:id",adminRoleAuth, deletePurchase)
+PurchaseRouter.delete("/purchase/:id",userAdminRoleAuth, deletePurchase)
 
