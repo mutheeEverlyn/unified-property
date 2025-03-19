@@ -114,5 +114,35 @@ export const deleteTransactionsService = async (id: number) => {
 
 export const transactionsData = async () => {
     // Implement the logic to fetch all transactions
-    return await db.select().from(transactionsTable);
+    return await db.query.transactionsTable.findMany({
+        columns:{
+         transaction_id:true,
+         amount:true,
+         phone_number:true,
+        status:true,
+        transaction_date:true
+        },with:{
+        purchase:{
+            columns:{
+              purchase_id:true,
+              location_id:true,
+              total_amount:true,
+                purchase_status:true,
+                property_type:true,
+                property_id:true,
+            }
+        },
+        user:{
+            columns:{
+                user_id:true,
+                address:true,
+                contact_phone:true,
+                created_at:true,
+                updated_at:true,
+                full_name:true,
+                email:true,
+            }
+        }
+        }
+})
 };

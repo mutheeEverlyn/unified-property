@@ -169,7 +169,7 @@ export const AuthOnUsersTable = pgTable("auth_on_users", {
       fields: [transactionsTable.user_id],
       references: [usersTable.user_id]
     }),
-    purchaseTable: one(purchaseTable,{
+    purchase: one(purchaseTable,{
       fields: [transactionsTable.purchase_id],
       references: [purchaseTable.purchase_id]
     }),

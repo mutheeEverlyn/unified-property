@@ -8,7 +8,7 @@ export const PurchaseRouter = new Hono();
 
 PurchaseRouter.get("/purchase",userAdminRoleAuth, listPurchase);
 
-PurchaseRouter.get("pPurchaseData",userAdminRoleAuth, Purchase);
+PurchaseRouter.get("PurchaseData",userAdminRoleAuth, Purchase);
 
 PurchaseRouter.get("/purchase/:id",userAdminRoleAuth, getPurchase)
 
